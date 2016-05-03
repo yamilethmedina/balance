@@ -25,18 +25,20 @@ class StateHandler::FL < StateHandler::Base
     end
 
     # Deal with an invalid card number
-
-    ### Step 5. EXAMPLE — Edit for your state! ###
-    phrase_indicating_invalid_card_number = "CHANGE ME"
+    ### Step 4. EXAMPLE — Edit for your state! ###
+    phrase_indicating_invalid_card_number = "we did not get your card number"
 
 
     if transcription_text.include?(phrase_indicating_invalid_card_number)
       return mg.card_number_not_found_message
     end
 
-      ### Step 6. EXAMPLE — Edit for your state! ###
+    # Deal with a successful balance transcription
+    ### Step 5. EXAMPLE — Edit for your state! ###
     regex_matches = transcription_text.scan(/(\$\S+)/)
     if regex_matches.count > 0
+    regex_matches = transcription_text.scan(/(\$\S+)/)
+    if regex_matches.count > 1
       ebt_amount = regex_matches[0][0]
       return "Hi! Your food stamp balance is #{ebt_amount}."
     end
@@ -44,5 +46,6 @@ class StateHandler::FL < StateHandler::Base
     # Deal with any other transcription (catching weird errors)
     # You do not need to change this. :D
     return mg.having_trouble_try_again_message
+    end
   end
 end
